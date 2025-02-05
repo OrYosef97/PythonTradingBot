@@ -9,24 +9,24 @@ class TradingBotUI:
         self.root.title("Trading Bot Controller")
         self.running = False
 
-        # כותרת
+        
         ttk.Label(root, text="Trading Bot", font=("Arial", 16, "bold")).pack(pady=10)
 
-        # בחירת מנייה
+        # Stock selecting
         self.symbol_label = ttk.Label(root, text="Select Symbol:")
         self.symbol_label.pack()
         self.symbol_entry = ttk.Entry(root)
         self.symbol_entry.pack()
 
-        # כפתור הפעלת הבוט
+        # Start button
         self.start_button = ttk.Button(root, text="Start Bot", command=self.start_bot)
         self.start_button.pack(pady=5)
 
-        # כפתור עצירת הבוט
+        # Stop button
         self.stop_button = ttk.Button(root, text="Stop Bot", command=self.stop_bot, state=tk.DISABLED)
         self.stop_button.pack(pady=5)
 
-        # תיבת טקסט להצגת סטטוס
+        # status 
         self.status_text = tk.Text(root, height=15, width=60)
         self.status_text.pack(pady=10)
 
