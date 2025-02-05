@@ -7,16 +7,16 @@ from datetime import datetime, timedelta
 import time
 import pytz
 
-# טוען משתנים מקובץ .env
+# Taking variabels from .env
 load_dotenv()
 API_KEY = os.getenv("APCA_API_KEY_ID")
 API_SECRET = os.getenv("APCA_API_SECRET_KEY")
 BASE_URL = os.getenv("APCA_API_BASE_URL")
 
-# חיבור ל-Alpaca API
+# Alpaca API connection
 api = tradeapi.REST(API_KEY, API_SECRET, BASE_URL, api_version='v2')
 
-# משתנה גלובלי לבדיקת ריצה
+# Global to check running
 running = False
 
 def stop_bot():
@@ -45,12 +45,12 @@ def calculate_indicators(bars):
     prices = bars["close"].values
     volume = bars["volume"].values
 
-    # חישוב VWAP
+    # VWAP calculating
     vwap_numerator = sum(volume[i] * prices[i] for i in range(len(prices)))
     vwap_denominator = sum(volume)
     vwap = vwap_numerator / vwap_denominator if vwap_denominator != 0 else 0
 
-    # חישוב MACD
+    # MACD calculating
     prices_series = pd.Series(prices)
     ema12 = prices_series.ewm(span=12, adjust=False).mean()
     ema26 = prices_series.ewm(span=26, adjust=False).mean()
@@ -58,7 +58,7 @@ def calculate_indicators(bars):
     signal = macd.ewm(span=9, adjust=False).mean()
     histogram = macd - signal
 
-    # חישוב ATR (מתוקן)
+    # ATR calculating
     high_low = bars["high"] - bars["low"]
     high_close = np.abs(bars["high"] - bars["close"].shift())
     low_close = np.abs(bars["low"] - bars["close"].shift())
